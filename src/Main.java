@@ -14,7 +14,7 @@ public class Main {
     public static void main(String[] args) {
         // gets Twitter instance with default credentials
         Twitter twitter = new TwitterFactory().getInstance();
-        twitter.setOAuthConsumer("7WCJFJnZzncBOb8YSj7Ot141R", "kNWVhswO46J6KpmEOoOr03l4EAvf4kskSPmHVx9RLS4YqbzTKT");
+        twitter.setOAuthConsumer("", "kNWVhswO46J6KpmEOoOr03l4EAvf4kskSPmHVx9RLS4YqbzTKT");
         AccessToken oathAccessToken = new AccessToken("113345536-8mcL9zu0CdO2EDgmaF9eMWn4FGC2TBBBuxycPV4k","PmIXSW0LfYVP8hvY6CDrGVev7iS3pnLn9RaNiOeM15mIY");
         twitter.setOAuthAccessToken(oathAccessToken);
         try {
