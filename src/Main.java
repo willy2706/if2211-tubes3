@@ -6,6 +6,7 @@
  */
 
 
+import java.lang.reflect.Method;
 import java.util.List;
 import twitter4j.*;
 import twitter4j.auth.AccessToken;
@@ -13,31 +14,30 @@ import twitter4j.auth.AccessToken;
 public class Main {
     public static void main(String[] args) {
         // gets Twitter instance with default credentials
-        Twitter twitter = new TwitterFactory().getInstance();
-        twitter.setOAuthConsumer("", "kNWVhswO46J6KpmEOoOr03l4EAvf4kskSPmHVx9RLS4YqbzTKT");
-        AccessToken oathAccessToken = new AccessToken("113345536-8mcL9zu0CdO2EDgmaF9eMWn4FGC2TBBBuxycPV4k","PmIXSW0LfYVP8hvY6CDrGVev7iS3pnLn9RaNiOeM15mIY");
-        twitter.setOAuthAccessToken(oathAccessToken);
+        final String algoritma = "KMP";
+        final String query = "saya";
+        final int count = 100;
         try {
-            User user = twitter.verifyCredentials();
-            //twitter.updateStatus("Halo ini tweet kedua dengan bahasa pemrograman java");
-            //List<Status> statuses = twitter.getMentionsTimeline();
-            /*System.out.println("Showing @" + user.getScreenName() + "'s mentions.");
-            for (Status status : statuses) {
-                System.out.println("@" + status.getUser().getScreenName() + " - " + status.getText() + " " + status.getId());
-            }*/
-            Query query = new Query("saya");
-            query.setCount(100);
-            QueryResult result = twitter.search(query);
+            Tweet tweet = new Tweet(query, count);
+            
+            /* panggil method algoritma */
+            Class cls = Class.forName("Algorithm");
+            Object obj = cls.newInstance();
+            Class[] paramString = new Class[1];	
+            paramString[0] = String.class;
+            Method method = cls.getDeclaredMethod("KMP",paramString);
+            
+            /* iterasi untuk method tersebut */
             int i = 0;
-            for (Status status : result.getTweets()) {
+            for (Status status : tweet.getResult()) {
                 ++i;
                 System.out.println(i+ ". " + "@" + status.getUser().getScreenName() + ":" + status.getText());
             }
-        } catch (TwitterException te) {
-            te.printStackTrace();
-            System.out.println("Failed to get timeline: " + te.getMessage());
-            System.exit(-1);
-        }
+            
+            System.out.println(method.invoke(obj,"abacaabadcabacabaabb"));
+       } catch (Exception e) {
+            System.out.println("err");
+       }
     }
 }
 
