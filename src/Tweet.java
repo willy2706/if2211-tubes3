@@ -17,11 +17,11 @@ import twitter4j.auth.AccessToken;
 
 /**
  *
- * @author WILLY
+ * @author Dimsum
  */
 public class Tweet {
     private List<Status> hasilpencarian;
-    
+    public Twitter t;
     public Tweet(String search, int count) {
         Twitter twitter = new TwitterFactory().getInstance();
         twitter.setOAuthConsumer("", "kNWVhswO46J6KpmEOoOr03l4EAvf4kskSPmHVx9RLS4YqbzTKT");
@@ -33,11 +33,6 @@ public class Tweet {
             query.setCount(count); // jumlah keyword
             QueryResult result = twitter.search(query);
             hasilpencarian = result.getTweets(); // end of pencarian
-            /*int i = 0;
-            for (Status status : result.getTweets()) {
-                ++i;
-                System.out.println(i+ ". " + "@" + status.getUser().getScreenName() + ":" + status.getText());
-            }*/
         } catch (TwitterException te) {
             te.printStackTrace();
             System.out.println("Failed to get timeline: " + te.getMessage());

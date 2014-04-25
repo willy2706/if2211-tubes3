@@ -5,25 +5,62 @@
  */
 
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileReader;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.Vector;
 
 /**
  *
- * @author Opel Howard
+ * @author Dimsum
  */
 public class Algorithm {
-    public static HashMap<String, Vector<String>> category;
-    public static Vector<String> keyword;
+    private static HashMap<String, Vector<String>> category = new HashMap<>();
+    public Algorithm() throws Exception {
+        category.clear(); // hapus isi yang ada
+        
+        /* mulai baca keyword keluhan */
+        Vector<String> keywordKeluhan = new Vector<>();
+        try {
+            Scanner masuk = new Scanner(Algorithm.class.getResourceAsStream("keywordKeluhan.txt"));
+            while (masuk.hasNext()){
+                String temp = masuk.next().toLowerCase();
+                keywordKeluhan.add(temp);
+                System.out.println(masuk.next());
+            }
+            masuk.close();
+        } catch (Exception e){
+            keywordKeluhan.clear();
+            throw e;
+        }
+        category.put("Keluhan", keywordKeluhan);
+        
+        Vector<String> keywordLaluLintas = new Vector<>();
+        try {
+            Scanner masuk = new Scanner(Algorithm.class.getResourceAsStream("keywordlalulintas.txt"));
+            while (masuk.hasNext()){
+                String temp = masuk.next().toLowerCase();
+                keywordLaluLintas.add(temp);
+                System.out.println(masuk.next());
+            }
+            masuk.close();
+        } catch (Exception e){
+            keywordLaluLintas.clear();
+            throw e;
+        }
+        category.put("Lalulintas", keywordLaluLintas);
+    }
+    
+    public static void addCategory(String Category,Vector<String> vectorOfCategory) {
+        category.put(Category,vectorOfCategory);
+    }
     
     public String KMP(String text) {
-       category = new HashMap<>();
-        keyword = new Vector<>();
-        keyword.add("abacab");
-        category.put("Gila", keyword);
         String ans = null;
         for (Iterator i = category.entrySet().iterator(); i.hasNext() && (ans == null);) {
             Map.Entry pair = (Map.Entry) i.next();
@@ -55,7 +92,7 @@ public class Algorithm {
         }
         return ans;
     }
-    public static String BoyerMoore(String text) {
+    public String BoyerMoore(String text) {
         String ans = null;
         HashMap<Character, Integer> L = new HashMap<>();
         for (int it = 0; it < text.length(); ++it) { // set the initial L function
@@ -106,19 +143,14 @@ public class Algorithm {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        String tweet = "abacaabadcabacabaabb";
+        /*String tweet = "abacaabadcabacabaabb";
         String tweet_lowercase = tweet.toLowerCase();
         
-        category = new HashMap<>();
-        keyword = new Vector<>();
-        keyword.add("abacab");
-        category.put("Gila", keyword);
-        
-        String ans = BoyerMoore(tweet_lowercase); // initial answer
+        String ans = new Algorithm().BoyerMoore(tweet_lowercase); // initial answer
         
         if (ans != null)
             System.out.println(ans);
         else
-            System.out.println("Unknown");
+            System.out.println("Unknown");*/
     }   
 }
